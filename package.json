@@ -2,9 +2,9 @@
   "name": "react-gradient",
   "version": "1.0.0",
   "description": "A React component with built-in functionality to transition between gradients",
-  "main": "index.js",
+  "main": "dist/react-gradient.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c -o dist/react-gradient.min.js"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,13 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.3.1",
+    "babel-preset-react": "^6.24.1",
     "esm": "^3.2.5",
     "react": "^16.8.2",
-    "react-dom": "^16.8.2"
+    "react-dom": "^16.8.2",
+    "rollup": "^1.2.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-uglify": "^6.0.2"
   }
 }
