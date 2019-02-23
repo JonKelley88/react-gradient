@@ -4,7 +4,8 @@
   "description": "A React component with built-in functionality to transition between gradients",
   "main": "dist/react-gradient.min.js",
   "scripts": {
-    "build": "rollup -c -o dist/react-gradient.min.js"
+	"build": "rollup -c -o dist/react-gradient.min.js",
+	"dev": "rollup -c -o dist/react-gradient.min.js --watch"
   },
   "repository": {
     "type": "git",
