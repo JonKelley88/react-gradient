@@ -10,39 +10,85 @@ export default class Gradient extends React.Component {
 
 		this.rgbGradients = convertToRGB(props.gradients);
 		this.lastCycle = props.gradients.length - 1;
-		this.duration = props.duration || 3000;
+		this.duration = props.duration || 4000;
 		this.gradientType = props.gradientType || 'linear';
+		this.angle = props.angle || '0deg';
 		this.animationId = undefined;
 		
+		this.setCycleConstants = this.setCycleConstants.bind(this);
 		this.animate = this.animate.bind(this);
 		
 		this.state = {
-			currentCycle: 0,
+			umounted: false,
 			counter: 0,
+			currentCycle: 0,
+			sourceGradient: this.rgbGradients[0],
+			targetGradient: this.rgbGradients[1],
+			leftDelta: undefined,
+			rightDelta: undefined
 		};
 	}
 	
 	componentDidMount() {
+		this.setCycleConstants();
 		window.requestAnimationFrame(this.animate);
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		const { currentCycle } = this.state;
+
+		// when a new cycle starts, calculate the cycle-long constants
+		if (prevState.currentCycle !== currentCycle) {
+			this.setCycleConstants();
+		}
+	}
+
 	componentWillUnmount() {
+		this.setState({ unmounted: true });
 		window.cancelAnimationFrame(this.animationId);
+	}
+
+	setCycleConstants() {
+		const { currentCycle, unmounted } = this.state;
+
+		if (unmounted) return;
+
+		const sourceGradient = this.rgbGradients[currentCycle];
+		const targetGradient = currentCycle === this.lastCycle ? 
+			this.rgbGradients[0] :
+			this.rgbGradients[currentCycle + 1];
+		const leftDelta = sourceGradient[0].map((num, idx) => num - targetGradient[0][idx]);
+		const rightDelta = sourceGradient[1].map((num, idx) => num - targetGradient[1][idx]);
+
+		this.setState({
+			sourceGradient,
+			targetGradient,
+			leftDelta,
+			rightDelta,
+		});
 	}
 	
 	animate() {
-		const { counter, currentCycle } = this.state;
+		const { 
+			counter, 
+			currentCycle,
+			sourceGradient,
+			leftDelta,
+			rightDelta,
+		} = this.state;
 		
 		const updatedCounter = counter >= this.duration ? 0 : counter + 16;
 		const updatedCycle = currentCycle === this.lastCycle ? 0 : currentCycle + 1;
 		
 		this.properties = calculateProperties({
-			gradients: this.rgbGradients,
 			propertyList: this.props.properties,
-			duration: this.duration,
-			cycle: currentCycle,
+			counter,
 			gradientType: this.gradientType,
-			counter
+			duration: this.duration,
+			sourceGradient,
+			leftDelta,
+			rightDelta,
+			angle: this.angle
 		});
 		
 		if (updatedCounter === 0) {
