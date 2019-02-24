@@ -1,4 +1,6 @@
-export default function calculateProperties({
+import memoize from 'lodash/memoize';
+
+export default memoize(function calculateProperties({
 	propertyList,
 	counter,
 	gradientType,
@@ -23,4 +25,4 @@ export default function calculateProperties({
 	});
 	
 	return propertiesObject;
-}
+});

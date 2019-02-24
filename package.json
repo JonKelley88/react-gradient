@@ -4,8 +4,8 @@
   "description": "A React component with built-in functionality to transition between gradients",
   "main": "dist/react-gradient.min.js",
   "scripts": {
-	"build": "rollup -c -o dist/react-gradient.min.js",
-	"dev": "rollup -c -o dist/react-gradient.min.js --watch"
+    "build": "rollup -c -o dist/react-gradient.min.js",
+    "dev": "rollup -c -o dist/react-gradient.min.js --watch"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "@babel/runtime": "^7.3.1",
     "babel-preset-react": "^6.24.1",
     "esm": "^3.2.5",
+    "lodash": "^4.17.11",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "rollup": "^1.2.2",

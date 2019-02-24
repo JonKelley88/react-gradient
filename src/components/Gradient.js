@@ -9,17 +9,17 @@ export default class Gradient extends React.Component {
 		this.properties = {};
 
 		this.rgbGradients = convertToRGB(props.gradients);
-		this.lastCycle = props.gradients.length - 1;
+		this.lastCycle = props.gradients.length - 1;	
 		this.duration = props.duration || 4000;
 		this.gradientType = props.gradientType || 'linear';
 		this.angle = props.angle || '0deg';
 		this.animationId = undefined;
+		this.unmounted = false;
 		
 		this.setCycleConstants = this.setCycleConstants.bind(this);
 		this.animate = this.animate.bind(this);
 		
 		this.state = {
-			umounted: false,
 			counter: 0,
 			currentCycle: 0,
 			sourceGradient: this.rgbGradients[0],
@@ -44,14 +44,14 @@ export default class Gradient extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this.setState({ unmounted: true });
+		this.unmounted = true;
 		window.cancelAnimationFrame(this.animationId);
 	}
 
 	setCycleConstants() {
-		const { currentCycle, unmounted } = this.state;
+		if (this.unmounted) return;
 
-		if (unmounted) return;
+		const { currentCycle } = this.state;
 
 		const sourceGradient = this.rgbGradients[currentCycle];
 		const targetGradient = currentCycle === this.lastCycle ? 
@@ -69,6 +69,8 @@ export default class Gradient extends React.Component {
 	}
 	
 	animate() {
+		if (this.unmounted) return;
+
 		const { 
 			counter, 
 			currentCycle,
@@ -82,13 +84,13 @@ export default class Gradient extends React.Component {
 		
 		this.properties = calculateProperties({
 			propertyList: this.props.properties,
-			counter,
 			gradientType: this.gradientType,
 			duration: this.duration,
+			angle: this.angle,
 			sourceGradient,
-			leftDelta,
 			rightDelta,
-			angle: this.angle
+			leftDelta,
+			counter,
 		});
 		
 		if (updatedCounter === 0) {
