@@ -11,12 +11,11 @@ export default class Gradient extends React.Component {
 		this.properties = {};
 
 		// supported props
-		// this.transitionType = props.transitionType || 'parallel';
-		this.transitionType = 'sequential';
+		this.transitionType = props.transitionType || 'parallel';
 		this.gradientType = props.gradientType || 'linear';
 		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
 		this.duration = props.duration || 4000;
-		this.angle = props.angle || '0deg';
+		this.angle = this.gradientType === 'radial' ? '' : props.angle || '';
 		
 		// other variables
 		this.cycleConstants = generateCycleConstants(this.rgbGradients, this.transitionType);	

@@ -21,7 +21,7 @@ export default memo(function calculateProperties({
 	const interpolatedValues = () => `rgb(${leftValues}), rgb(${rightValues})`;
 	
 	propertyList.forEach(property => {
-		propertiesObject[property] = `${gradientType}-gradient(${angle}, ${interpolatedValues()})`;
+		propertiesObject[property] = `${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues()})`;
 	});
 	
 	return propertiesObject;
