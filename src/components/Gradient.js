@@ -1,6 +1,7 @@
 import React from 'react';
 import convertToRGB from '../utils/convertToRGB';
 import calculateProperties from '../utils/calculateProperties';
+import generateCycleConstants from '../utils/generateCycleConstants';
 
 export default class Gradient extends React.Component {
 	constructor(props) {
@@ -9,7 +10,8 @@ export default class Gradient extends React.Component {
 		this.properties = {};
 
 		this.rgbGradients = convertToRGB(props.gradients);
-		this.lastCycle = props.gradients.length - 1;	
+		this.lastCycle = props.gradients.length - 1;
+		this.cycleConstants = generateCycleConstants(this.rgbGradients);	
 		this.duration = props.duration || 4000;
 		this.gradientType = props.gradientType || 'linear';
 		this.angle = props.angle || '0deg';
@@ -23,7 +25,6 @@ export default class Gradient extends React.Component {
 			counter: 0,
 			currentCycle: 0,
 			sourceGradient: this.rgbGradients[0],
-			targetGradient: this.rgbGradients[1],
 			leftDelta: undefined,
 			rightDelta: undefined
 		};
@@ -53,18 +54,8 @@ export default class Gradient extends React.Component {
 
 		const { currentCycle } = this.state;
 
-		const sourceGradient = this.rgbGradients[currentCycle];
-		const targetGradient = currentCycle === this.lastCycle ? 
-			this.rgbGradients[0] :
-			this.rgbGradients[currentCycle + 1];
-		const leftDelta = sourceGradient[0].map((num, idx) => num - targetGradient[0][idx]);
-		const rightDelta = sourceGradient[1].map((num, idx) => num - targetGradient[1][idx]);
-
 		this.setState({
-			sourceGradient,
-			targetGradient,
-			leftDelta,
-			rightDelta,
+			...this.cycleConstants[currentCycle]
 		});
 	}
 	
