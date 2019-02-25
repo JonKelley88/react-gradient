@@ -1,8 +1,9 @@
+import flatten from 'lodash/flatten';
 import hexToRGB from './hexToRGB';
 import rgbStringToRGB from './rgbStringToRGB';
 import isRGBArray from './isRGBArray';
 
-export default function convertToRGB(gradients) {
+export default function convertToRGB(gradients, transitionType) {
 	const rgbArray = gradients.map(gradient => {
 		return gradient.map(color => {
 			// if the color is already an rgb value array
@@ -13,6 +14,10 @@ export default function convertToRGB(gradients) {
 			if (color.startsWith('rgb(')) return rgbStringToRGB(color);
 		});
 	});
+
+	// parallel transition array
+	if (transitionType === 'parallel') return rgbArray;
 	
-	return rgbArray;
+	// sequential transition array
+	return flatten(rgbArray);
 };

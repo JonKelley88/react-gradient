@@ -7,26 +7,34 @@ export default class Gradient extends React.Component {
 	constructor(props) {
 		super(props);
 		
+		// the css properties being passed into the component styles
 		this.properties = {};
 
-		this.rgbGradients = convertToRGB(props.gradients);
-		this.lastCycle = props.gradients.length - 1;
-		this.cycleConstants = generateCycleConstants(this.rgbGradients);	
-		this.duration = props.duration || 4000;
+		// supported props
+		// this.transitionType = props.transitionType || 'parallel';
+		this.transitionType = 'sequential';
 		this.gradientType = props.gradientType || 'linear';
+		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
+		this.duration = props.duration || 4000;
 		this.angle = props.angle || '0deg';
+		
+		// other variables
+		this.cycleConstants = generateCycleConstants(this.rgbGradients, this.transitionType);	
+		this.lastCycle = props.gradients.length - 1;
 		this.animationId = undefined;
 		this.unmounted = false;
 		
+		// methods
 		this.setCycleConstants = this.setCycleConstants.bind(this);
 		this.animate = this.animate.bind(this);
 		
+		// state
 		this.state = {
-			counter: 0,
-			currentCycle: 0,
 			sourceGradient: this.rgbGradients[0],
+			rightDelta: undefined,
 			leftDelta: undefined,
-			rightDelta: undefined
+			currentCycle: 0,
+			counter: 0,
 		};
 	}
 	
@@ -38,7 +46,6 @@ export default class Gradient extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		const { currentCycle } = this.state;
 
-		// when a new cycle starts, calculate the cycle-long constants
 		if (prevState.currentCycle !== currentCycle) {
 			this.setCycleConstants();
 		}
@@ -50,8 +57,6 @@ export default class Gradient extends React.Component {
 	}
 
 	setCycleConstants() {
-		if (this.unmounted) return;
-
 		const { currentCycle } = this.state;
 
 		this.setState({
@@ -63,15 +68,12 @@ export default class Gradient extends React.Component {
 		if (this.unmounted) return;
 
 		const { 
-			counter, 
-			currentCycle,
 			sourceGradient,
-			leftDelta,
+			currentCycle,
 			rightDelta,
+			leftDelta,
+			counter, 
 		} = this.state;
-		
-		const updatedCounter = counter >= this.duration ? 0 : counter + 16;
-		const updatedCycle = currentCycle === this.lastCycle ? 0 : currentCycle + 1;
 		
 		this.properties = calculateProperties({
 			propertyList: this.props.properties,
@@ -83,7 +85,10 @@ export default class Gradient extends React.Component {
 			leftDelta,
 			counter,
 		});
-		
+
+		const updatedCounter = counter >= this.duration ? 0 : counter + 16;
+		const updatedCycle = currentCycle === this.lastCycle ? 0 : currentCycle + 1;
+
 		if (updatedCounter === 0) {
 			this.setState({
 				currentCycle: updatedCycle,
@@ -99,11 +104,14 @@ export default class Gradient extends React.Component {
 	}
 	
 	render() {
-		const { children } = this.props;
+		const { 
+			children, 
+			className = '' 
+		} = this.props;
 		
 		return (
 			<div 
-				className="animate-gradient"
+				className={ `react-gradient ${className}` }
 				style={ this.properties }
 			>
 				{ children }
