@@ -11,7 +11,7 @@ export default memo(function calculateProperties({
 	angle
 }) {
 	const propertiesObject = {};
-	const transitionProgress = (counter * 100 / duration).toFixed(3);
+	const transitionProgress = (counter * 100 / duration).toFixed(2);
 
 	const leftInterpolation = leftDelta.map(num => transitionProgress * num / 100);
 	const rightInterpolation = rightDelta.map(num => transitionProgress * num / 100);

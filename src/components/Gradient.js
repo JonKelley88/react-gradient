@@ -16,6 +16,7 @@ export default class Gradient extends React.Component {
 		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
 		this.duration = props.duration || 4000;
 		this.angle = this.gradientType === 'radial' ? '' : props.angle || '';
+		this.propertyList = props.properties;
 		
 		// other variables
 		this.cycleConstants = generateCycleConstants(this.rgbGradients, this.transitionType);	
@@ -75,7 +76,7 @@ export default class Gradient extends React.Component {
 		} = this.state;
 		
 		this.properties = calculateProperties({
-			propertyList: this.props.properties,
+			propertyList: this.propertyList,
 			gradientType: this.gradientType,
 			duration: this.duration,
 			angle: this.angle,
@@ -106,12 +107,10 @@ export default class Gradient extends React.Component {
 		const { 
 			children, 
 			className = '',
-			...rest
 		} = this.props;
 		
 		return (
 			<div 
-				{ ...rest }
 				className={ `react-gradient ${className}` }
 				style={ this.properties }
 			>
