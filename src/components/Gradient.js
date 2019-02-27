@@ -19,7 +19,7 @@ export default class Gradient extends React.Component {
 		
 		// other variables
 		this.cycleConstants = generateCycleConstants(this.rgbGradients, this.transitionType);	
-		this.lastCycle = props.gradients.length - 1;
+		this.lastCycle = this.rgbGradients.length - 1;
 		this.animationId = undefined;
 		this.unmounted = false;
 		
@@ -105,11 +105,13 @@ export default class Gradient extends React.Component {
 	render() {
 		const { 
 			children, 
-			className = '' 
+			className = '',
+			...rest
 		} = this.props;
 		
 		return (
 			<div 
+				{ ...rest }
 				className={ `react-gradient ${className}` }
 				style={ this.properties }
 			>
