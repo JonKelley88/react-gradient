@@ -18,10 +18,11 @@ export default memo(function calculateProperties({
 	const leftValues = sourceGradient[0].map((num, idx) => Math.round(num - leftInterpolation[idx]));
 	const rightValues = sourceGradient[1].map((num, idx) => Math.round(num - rightInterpolation[idx]));
 	
-	const interpolatedValues = () => `rgb(${leftValues}), rgb(${rightValues})`;
+	const interpolatedValues = `rgb(${leftValues}), rgb(${rightValues})`;
 	
 	propertyList.forEach(property => {
-		propertiesObject[property] = `${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues()})`;
+		propertiesObject[property] = 
+			`${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues}) ${property === 'borderImage' && '1'}`;
 	});
 	
 	return propertiesObject;
