@@ -22,7 +22,7 @@ export default memo(function calculateProperties({
 	
 	propertyList.forEach(property => {
 		propertiesObject[property] = 
-			`${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues}) ${property === 'borderImage' && '1'}`;
+			`${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues})${property === 'borderImage' ? ' 1' : ''}`;
 	});
 	
 	return propertiesObject;
