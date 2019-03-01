@@ -1,7 +1,7 @@
 import memo from 'lodash/memoize';
 
 export default memo(function calculateProperties({
-	propertyList,
+	property,
 	counter,
 	gradientType,
 	duration,
@@ -20,10 +20,7 @@ export default memo(function calculateProperties({
 	
 	const interpolatedValues = `rgb(${leftValues}), rgb(${rightValues})`;
 	
-	propertyList.forEach(property => {
-		propertiesObject[property] = 
-			`${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues})${property === 'borderImage' ? ' 1' : ''}`;
-	});
+	propertiesObject[property] = `${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues})${property === 'borderImage' ? ' 1' : ''}`;
 	
 	return propertiesObject;
 });
