@@ -20,14 +20,12 @@ const gradients = [
 	['#ff2121', '#25c668'],
 ];
 
-const properties = ['background'];
-
 export default function App() {
 	return (
 		<div className="app">
 			<Gradient
 				gradients={ gradients } // required
-				properties={ properties } // required
+				property="background" // required
 				duration={ 3000 }
 				angle="45deg"
 			/>
@@ -43,10 +41,12 @@ All options for the Gradient component are passed through props
 | Props                          | Type         | Default | Description   | Values                                      
 | :-----------------------       | :----:       | :----:  | :------------ | :-----
 | gradients <b>(required)</b>    | array        |         | List of gradients to transition between | 
-| properties <b>(required)</b>   | array        |         | List of css properties to apply the gradient to | 
-| gradientType                   | string       | linear  | Fill type of the gradient | linear <br> radial
-| duration                       | number       | 4000    | How long each transition will take from one gradient to the next in milliseconds | 
+| property <b>(required)</b>     | string       |         | CSS property to apply the gradient to | `background`, <br> `border`
+| gradientType                   | string       | linear  | Fill type of the gradient | `linear`, <br> `radial`
+| duration                       | number       | 4000    | How long each transition will take from one gradient to the next in milliseconds | milliseconds
 | angle                          | string       | 0deg    | Angle of direction for the gradient's line <i>(Only applies to linear gradients)<i> | [angle units](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+| transitionType                 | string       | parallel| How the transition is calculated | `parallel`, <br> `sequential`
+| element                        | string       | div     | Type of element to create Gradient with | Most [html elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
 
 ## License
 
