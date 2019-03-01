@@ -88,7 +88,8 @@ export default class Gradient extends React.Component {
 			counter,
 		});
 
-		const updatedCounter = counter >= this.duration ? 0 : counter + 16;
+		const increment = this.transitionType === 'parallel' ? 16 : 34;
+		const updatedCounter = counter >= this.duration ? 0 : counter + increment;
 		const updatedCycle = currentCycle === this.lastCycle ? 0 : currentCycle + 1;
 
 		if (updatedCounter === 0) {
