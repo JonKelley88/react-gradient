@@ -12,12 +12,12 @@ export default class Gradient extends React.Component {
 		this.properties = {};
 
 		// supported props
+		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
+		this.angle = this.gradientType === 'radial' ? '' : props.angle || '';
 		this.transitionType = props.transitionType || 'parallel';
 		this.gradientType = props.gradientType || 'linear';
-		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
-		this.duration = props.duration || 4000;
-		this.angle = this.gradientType === 'radial' ? '' : props.angle || '';
 		this.property = matchProperties(props.property);
+		this.duration = props.duration || 4000;
 		this.element = props.element || 'div';
 		
 		// other variables
@@ -27,7 +27,6 @@ export default class Gradient extends React.Component {
 		this.unmounted = false;
 		
 		// methods
-		this.setCycleConstants = this.setCycleConstants.bind(this);
 		this.animate = this.animate.bind(this);
 		
 		// state
@@ -41,29 +40,12 @@ export default class Gradient extends React.Component {
 	}
 	
 	componentDidMount() {
-		this.setCycleConstants();
 		window.requestAnimationFrame(this.animate);
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		const { currentCycle } = this.state;
-
-		if (prevState.currentCycle !== currentCycle) {
-			this.setCycleConstants();
-		}
 	}
 
 	componentWillUnmount() {
 		this.unmounted = true;
 		window.cancelAnimationFrame(this.animationId);
-	}
-
-	setCycleConstants() {
-		const { currentCycle } = this.state;
-
-		this.setState({
-			...this.cycleConstants[currentCycle]
-		});
 	}
 	
 	animate() {
@@ -94,8 +76,9 @@ export default class Gradient extends React.Component {
 
 		if (updatedCounter === 0) {
 			this.setState({
+				...this.cycleConstants[updatedCycle],
 				currentCycle: updatedCycle,
-				counter: updatedCounter
+				counter: updatedCounter,
 			});
 		} else {
 			this.setState({
