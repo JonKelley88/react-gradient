@@ -1,16 +1,15 @@
 import memo from 'lodash/memoize';
 
-export default memo(function calculateProperties({
+export default memo(function calculateGradient({
+	sourceGradient,
+	gradientType,
+	rightDelta,
+	leftDelta,
+	duration,
 	property,
 	counter,
-	gradientType,
-	duration,
-	sourceGradient,
-	leftDelta,
-	rightDelta,
 	angle
 }) {
-	const propertiesObject = {};
 	const transitionProgress = (counter * 100 / duration).toFixed(2);
 
 	const leftInterpolation = leftDelta.map(num => transitionProgress * num / 100);
@@ -19,8 +18,6 @@ export default memo(function calculateProperties({
 	const rightValues = sourceGradient[1].map((num, idx) => Math.round(num - rightInterpolation[idx]));
 	
 	const interpolatedValues = `rgb(${leftValues}), rgb(${rightValues})`;
-	
-	propertiesObject[property] = `${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues})${property === 'borderImage' ? ' 1' : ''}`;
-	
-	return propertiesObject;
+
+	return `${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues})${property === 'borderImage' ? ' 1' : ''}`;
 });

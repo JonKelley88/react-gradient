@@ -1,20 +1,20 @@
 import React from 'react';
-import convertToRGB from '../utils/convertToRGB';
-import calculateProperties from '../utils/calculateProperties';
 import generateCycleConstants from '../utils/generateCycleConstants';
+import calculateGradient from '../utils/calculateGradient';
 import matchProperties from '../utils/matchProperties';
+import convertToRGB from '../utils/convertToRGB';
 
 export default class Gradient extends React.Component {
 	constructor(props) {
 		super(props);
 		
 		// the css properties being passed into the component styles
-		this.properties = {};
+		this.style = {};
 
 		// supported props
+		this.transitionType = props.transitionType || 'parallel';
 		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
 		this.angle = this.gradientType === 'radial' ? '' : props.angle || '';
-		this.transitionType = props.transitionType || 'parallel';
 		this.gradientType = props.gradientType || 'linear';
 		this.property = matchProperties(props.property);
 		this.duration = props.duration || 4000;
@@ -40,6 +40,10 @@ export default class Gradient extends React.Component {
 	}
 	
 	componentDidMount() {
+		this.setState({
+			...this.cycleConstants[0]
+		});
+
 		window.requestAnimationFrame(this.animate);
 	}
 
@@ -58,17 +62,19 @@ export default class Gradient extends React.Component {
 			leftDelta,
 			counter, 
 		} = this.state;
-		
-		this.properties = calculateProperties({
-			gradientType: this.gradientType,
-			duration: this.duration,
-			property: this.property,
-			angle: this.angle,
-			sourceGradient,
-			rightDelta,
-			leftDelta,
-			counter,
-		});
+
+		this.style = {
+			[this.property]: calculateGradient({
+				gradientType: this.gradientType,
+				duration: this.duration,
+				property: this.property,
+				angle: this.angle,
+				sourceGradient,
+				rightDelta,
+				leftDelta,
+				counter,
+			})
+		};
 
 		const increment = this.transitionType === 'parallel' ? 16 : 34;
 		const updatedCounter = counter >= this.duration ? 0 : counter + increment;
@@ -99,7 +105,7 @@ export default class Gradient extends React.Component {
 			this.element,
 			{	
 				className: `react-gradient ${className}`,
-				style: this.properties
+				style: this.style
 			},
 			children
 		);
