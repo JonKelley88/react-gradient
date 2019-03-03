@@ -8,14 +8,14 @@ export default class Gradient extends React.Component {
 	constructor(props) {
 		super(props);
 		
-		// the css properties being passed into the component styles
+		// the css property being passed into the component styles
 		this.style = {};
 
 		// supported props
 		this.transitionType = props.transitionType || 'parallel';
 		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
-		this.angle = this.gradientType === 'radial' ? '' : props.angle || '';
 		this.gradientType = props.gradientType || 'linear';
+		this.angle = this.gradientType === 'radial' ? '' : props.angle;
 		this.property = matchProperties(props.property);
 		this.duration = props.duration || 4000;
 		this.element = props.element || 'div';
@@ -97,13 +97,23 @@ export default class Gradient extends React.Component {
 	
 	render() {
 		const { 
-			children, 
+			transitionType,
 			className = '',
+			gradientType,
+			gradients,
+			children, 
+			duration,
+			property,
+			element,
+			angle,
+
+			...rest
 		} = this.props;
 
 		return React.createElement(
 			this.element,
 			{	
+				...rest,
 				className: `react-gradient ${className}`,
 				style: this.style
 			},
