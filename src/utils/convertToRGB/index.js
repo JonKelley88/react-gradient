@@ -1,17 +1,30 @@
+import convert from 'color-convert';
 import flatten from 'lodash/flatten';
-import hexToRGB from './hexToRGB';
-import rgbStringToRGB from './rgbStringToRGB';
-import isRGBArray from './isRGBArray';
+import { colorStringToArray, stringArrayToNumericArray } from './helpers';
+import { 
+	isRgbArray, 
+	isHslArray, 
+	isHexString, 
+	isRgbString ,
+	isHslString,
+	isColorNameString,
+} from './checks';
 
 export default function convertToRGB(gradients, transitionType) {
 	const rgbArray = gradients.map(gradient => {
 		return gradient.map(color => {
-			// if the color is already an rgb value array
-			if (Array.isArray(color) && isRGBArray(color)) return color;
-			// if the color is a hex
-			if (color.startsWith('#')) return hexToRGB(color);
-			// if the color is an rgb (string)
-			if (color.startsWith('rgb(')) return rgbStringToRGB(color);
+			// hex string
+			if (isHexString(color)) return convert.hex.rgb(color.substring(1));
+			// rgb string
+			if (isRgbString(color)) return colorStringToArray(color);
+			// hsl string
+			if (isHslString(color)) return convert.hsl.rgb(colorStringToArray(color));
+			// named color string
+			if (isColorNameString(color)) return convert.keyword.rgb(color);
+			// hsl array
+			if (isHslArray(color)) return convert.hsl.rgb(stringArrayToNumericArray(color));
+			// already an rgb array
+			if (isRgbArray(color)) return color;
 		});
 	});
 
