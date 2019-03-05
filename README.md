@@ -4,7 +4,7 @@
 
 ## Installation
 
-<b>react-gradient</b> is available as an [npm package.](link-to-published-npm-page)
+<b>react-gradient</b> is available as an [npm package](link-to-published-npm-page)
 ```bash
 $ npm install react-gradient
 ```
@@ -46,7 +46,20 @@ All options for the Gradient component are passed through props
 | duration                       | number       | 4000    | How long each transition will take from one gradient to the next in milliseconds | milliseconds
 | angle                          | string       | 0deg    | Angle of direction for the gradient's line <i>(Only applies to linear gradients)<i> | [angle units](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
 | transitionType                 | string       | parallel| How the transition is calculated | `parallel`, <br> `sequential`
-| element                        | string       | div     | Type of element to create Gradient with | Most [html elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+| element                        | string       | div     | Type of element to create Gradient with | most [html elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+	
+
+
+The `gradients` option accepts gradient arrays. A gradient array must hold two colors. The following are acceptable color formats:
+
+| Format   | Type   | Example
+| :------- | :----- | :---------------
+| keyword  | string | `"SkyBlue"`
+| HEX      | string | `"#87ceeb"`
+| HSL      | array  | `[197, "71%", "73%"]`
+| HSL      | string  | `"hsl(197, 71%, 73%)"`
+| RGB      | array  | `[135, 206, 235]`
+| RGB      | string | `"rgb(135, 206, 235)"`
 
 ## License
 
