@@ -5,7 +5,7 @@ import {
 	isRgbArray, 
 	isHslArray, 
 	isHexString, 
-	isRgbString ,
+	isRgbString,
 	isHslString,
 	isColorNameString,
 } from './checks';

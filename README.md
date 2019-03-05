@@ -41,7 +41,7 @@ All options for the Gradient component are passed through props
 | Props                          | Type         | Default | Description   | Values                                      
 | :-----------------------       | :----:       | :----:  | :------------ | :-----
 | gradients <b>(required)</b>    | array        |         | List of gradients to transition between | 
-| property <b>(required)</b>     | string       |         | CSS property to apply the gradient to | `background`, <br> `border`
+| property <b>(required)</b>     | string       |         | CSS property to apply the gradient to | `background`, <br> `border`, <br> `text`
 | gradientType                   | string       | linear  | Fill type of the gradient | `linear`, <br> `radial`
 | duration                       | number       | 4000    | How long each transition will take from one gradient to the next in milliseconds | milliseconds
 | angle                          | string       | 0deg    | Angle of direction for the gradient's line <i>(Only applies to linear gradients)<i> | [angle units](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)

@@ -23,6 +23,7 @@ export default class Gradient extends React.Component {
 		// other variables
 		this.cycleConstants = generateCycleConstants(this.rgbGradients, this.transitionType);	
 		this.lastCycle = this.rgbGradients.length - 1;
+		this.isText = props.property === 'text';
 		this.animationId = undefined;
 		this.unmounted = false;
 		
@@ -76,8 +77,10 @@ export default class Gradient extends React.Component {
 			})
 		};
 
-		const increment = this.transitionType === 'parallel' ? 16 : 34;
-		const updatedCounter = counter >= this.duration ? 0 : counter + increment;
+		if (this.isText) this.style.WebkitBackgroundClip = 'text';
+		if (this.isText) this.style.WebkitTextFillColor = 'transparent';
+
+		const updatedCounter = counter >= this.duration ? 0 : counter + 16;
 		const updatedCycle = currentCycle === this.lastCycle ? 0 : currentCycle + 1;
 
 		if (updatedCounter === 0) {

@@ -1,7 +1,7 @@
 const propertyTargets = {
-	background: 'background',
+	background: 'backgroundImage',
 	border: 'borderImage',
-	text: 'background'
+	text: 'backgroundImage'
 };
 
 export default property => propertyTargets[property];
