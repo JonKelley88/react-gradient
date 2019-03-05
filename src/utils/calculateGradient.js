@@ -19,5 +19,5 @@ export default memo(function calculateGradient({
 	
 	const interpolatedValues = `rgb(${leftValues}), rgb(${rightValues})`;
 
-	return `${gradientType}-gradient(${angle && angle + ', '}${interpolatedValues})${property === 'borderImage' ? ' 1' : ''}`;
+	return `${gradientType}-gradient(${angle && angle}${interpolatedValues})${property === 'borderImage' && ' 1'}`;
 });

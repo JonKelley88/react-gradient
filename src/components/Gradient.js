@@ -15,7 +15,7 @@ export default class Gradient extends React.Component {
 		this.transitionType = props.transitionType || 'parallel';
 		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
 		this.gradientType = props.gradientType || 'linear';
-		this.angle = this.gradientType === 'radial' ? '' : props.angle;
+		this.angle = this.gradientType === 'radial' ? '' : `${props.angle}, `;
 		this.property = matchProperties(props.property);
 		this.duration = props.duration || 4000;
 		this.element = props.element || 'div';
