@@ -1,31 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import generateCycleConstants from '../utils/generateCycleConstants';
 import calculateGradient from '../utils/calculateGradient';
 import matchProperties from '../utils/matchProperties';
 import convertToRGB from '../utils/convertToRGB';
 
-export default class Gradient extends React.Component {
+export default class Gradient extends Component {
 	constructor(props) {
 		super(props);
-		
-		// the css property being passed into the component styles
-		this.style = {};
 
 		// supported props
 		this.transitionType = props.transitionType || 'parallel';
 		this.rgbGradients = convertToRGB(props.gradients, this.transitionType);
 		this.gradientType = props.gradientType || 'linear';
-		this.angle = this.gradientType === 'radial' ? '' : `${props.angle}, `;
-		this.property = matchProperties(props.property);
+		this.angle = this.gradientType === 'radial' ? '' : `${props.angle || '0deg'}, `;
+		this.property = matchProperties(props.property || 'background');
 		this.duration = props.duration || 4000;
 		this.element = props.element || 'div';
+
+		// the css property being passed into the component styles
+		this.style = { [this.property]: '' };
 		
 		// other variables
 		this.cycleConstants = generateCycleConstants(this.rgbGradients, this.transitionType);	
 		this.lastCycle = this.rgbGradients.length - 1;
 		this.isText = props.property === 'text';
 		this.animationId = undefined;
-		this.unmounted = false;
+		this.mounted = false;
 		
 		// methods
 		this.animate = this.animate.bind(this);
@@ -41,20 +41,20 @@ export default class Gradient extends React.Component {
 	}
 	
 	componentDidMount() {
+		this.mounted = true;
+
 		this.setState({
 			...this.cycleConstants[0]
-		});
-
-		window.requestAnimationFrame(this.animate);
+		}, this.animate);
 	}
 
 	componentWillUnmount() {
-		this.unmounted = true;
+		this.mounted = false;
 		window.cancelAnimationFrame(this.animationId);
 	}
 	
 	animate() {
-		if (this.unmounted) return;
+		if (!this.mounted) return;
 
 		const { 
 			sourceGradient,
@@ -64,21 +64,21 @@ export default class Gradient extends React.Component {
 			counter, 
 		} = this.state;
 
-		this.style = {
-			[this.property]: calculateGradient({
-				gradientType: this.gradientType,
-				duration: this.duration,
-				property: this.property,
-				angle: this.angle,
-				sourceGradient,
-				rightDelta,
-				leftDelta,
-				counter,
-			})
-		};
+		this.style[this.property] = calculateGradient({
+			gradientType: this.gradientType,
+			duration: this.duration,
+			property: this.property,
+			angle: this.angle,
+			sourceGradient,
+			rightDelta,
+			leftDelta,
+			counter,
+		});
 
-		if (this.isText) this.style.WebkitBackgroundClip = 'text';
-		if (this.isText) this.style.WebkitTextFillColor = 'transparent';
+		if (this.isText) {
+			this.style.WebkitBackgroundClip = 'text';
+			this.style.WebkitTextFillColor = 'transparent';
+		}
 
 		const updatedCounter = counter >= this.duration ? 0 : counter + 16;
 		const updatedCycle = currentCycle === this.lastCycle ? 0 : currentCycle + 1;
@@ -118,7 +118,7 @@ export default class Gradient extends React.Component {
 			{	
 				...rest,
 				className: `react-gradient ${className}`,
-				style: this.style
+				style: { ...this.style }
 			},
 			children
 		);

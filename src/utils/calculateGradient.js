@@ -1,6 +1,12 @@
-import memo from 'lodash/memoize';
+const interperlationProgress = function(num) {
+	return this * num / 100;
+};
 
-export default memo(function calculateGradient({
+const interpolate = function(num, idx) {
+	return Math.round(num - this[idx]);
+};
+
+export default function calculateGradient({
 	sourceGradient,
 	gradientType,
 	rightDelta,
@@ -10,14 +16,14 @@ export default memo(function calculateGradient({
 	counter,
 	angle
 }) {
-	const transitionProgress = (counter * 100 / duration).toFixed(2);
+	const transitionProgress = +(counter * 100 / duration).toFixed(2);
 
-	const leftInterpolation = leftDelta.map(num => transitionProgress * num / 100);
-	const rightInterpolation = rightDelta.map(num => transitionProgress * num / 100);
-	const leftValues = sourceGradient[0].map((num, idx) => Math.round(num - leftInterpolation[idx]));
-	const rightValues = sourceGradient[1].map((num, idx) => Math.round(num - rightInterpolation[idx]));
+	const leftInterpolation = leftDelta.map(interperlationProgress, transitionProgress);
+	const rightInterpolation = rightDelta.map(interperlationProgress, transitionProgress);
+	const leftValues = sourceGradient[0].map(interpolate, leftInterpolation);
+	const rightValues = sourceGradient[1].map(interpolate, rightInterpolation);
 	
 	const interpolatedValues = `rgb(${leftValues}), rgb(${rightValues})`;
 
-	return `${gradientType}-gradient(${angle && angle}${interpolatedValues})${property === 'borderImage' && ' 1'}`;
-});
+	return `${gradientType}-gradient(${angle}${interpolatedValues})${property === 'borderImage' ? ' 1' : ''}`;
+};

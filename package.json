@@ -1,7 +1,7 @@
 {
   "name": "react-gradient",
   "version": "1.0.0",
-  "description": "A React component with built-in functionality to transition between gradients",
+  "description": "A React component with built-in functionality to animate gradients",
   "main": "dist/react-gradient.min.js",
   "scripts": {
     "build": "rollup -c -o dist/react-gradient.min.js",

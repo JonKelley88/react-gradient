@@ -1,16 +1,15 @@
-import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import inRange from 'lodash/inRange';
 
 const isRgbArray = function(color) {
-	if (!isArray(color) || color.length !== 3) return false;
+	if (!Array.isArray(color) || color.length !== 3) return false;
 	return color.every(num => num >= 0 && num <= 255);
 };
 
 const isHslArray = function(color) {
 	const [hue, saturation, lightness] = color.map(num => num);
 
-	if (!isArray(color) || color.length !== 3) return false;
+	if (!Array.isArray(color) || color.length !== 3) return false;
 	if (!inRange(hue, 0, 360 + 1)) return false;
 	if (!inRange(parseFloat(saturation), 0, 100 + 1)) return false;
 	if (!inRange(parseFloat(lightness), 0, 100 + 1)) return false;
