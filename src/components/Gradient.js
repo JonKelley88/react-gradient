@@ -32,9 +32,6 @@ export default class Gradient extends Component {
 		
 		// state
 		this.state = {
-			sourceGradient: this.rgbGradients[0],
-			rightDelta: undefined,
-			leftDelta: undefined,
 			currentCycle: 0,
 			counter: 0,
 		};
@@ -42,10 +39,7 @@ export default class Gradient extends Component {
 	
 	componentDidMount() {
 		this.mounted = true;
-
-		this.setState({
-			...this.cycleConstants[0]
-		}, this.animate);
+		this.animate();
 	}
 
 	componentWillUnmount() {
@@ -56,13 +50,13 @@ export default class Gradient extends Component {
 	animate() {
 		if (!this.mounted) return;
 
+		const { currentCycle, counter } = this.state;
+
 		const { 
 			sourceGradient,
-			currentCycle,
-			rightDelta,
 			leftDelta,
-			counter, 
-		} = this.state;
+			rightDelta,
+		} = this.cycleConstants[currentCycle];
 
 		this.style[this.property] = calculateGradient({
 			gradientType: this.gradientType,
@@ -85,7 +79,6 @@ export default class Gradient extends Component {
 
 		if (updatedCounter === 0) {
 			this.setState({
-				...this.cycleConstants[updatedCycle],
 				currentCycle: updatedCycle,
 				counter: updatedCounter,
 			});
