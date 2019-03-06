@@ -5,7 +5,7 @@
   "main": "dist/react-gradient.min.js",
   "scripts": {
     "build": "rollup -c -o dist/react-gradient.min.js",
-    "dev": "rollup -c -o dist/react-gradient.min.js --watch"
+    "watch": "rollup -c -o dist/react-gradient.min.js --watch"
   },
   "repository": {
     "type": "git",
@@ -26,13 +26,12 @@
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
-    "babel-preset-react": "^6.24.1",
     "color-convert": "^2.0.0",
     "lodash": "^4.17.11",
     "rollup": "^1.2.2",
     "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-babel-minify": "^7.0.0",
     "rollup-plugin-commonjs": "^9.2.1",
-    "rollup-plugin-node-resolve": "^4.0.0",
-    "rollup-plugin-uglify": "^6.0.2"
+    "rollup-plugin-node-resolve": "^4.0.0"
   }
 }
