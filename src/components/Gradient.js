@@ -14,7 +14,7 @@ export default class Gradient extends Component {
 		this.gradientType = props.gradientType || 'linear';
 		this.angle = this.gradientType === 'radial' ? '' : `${props.angle || '0deg'}, `;
 		this.property = matchProperties(props.property || 'background');
-		this.duration = props.duration || 4000;
+		this.duration = props.duration || 5000;
 		this.element = props.element || 'div';
 
 		// the css property being passed into the component styles
