@@ -11,6 +11,16 @@
     "type": "git",
     "url": "git+https://github.com/JonKelley88/react-gradient.git"
   },
+  "files": [
+	  "dist"
+  ],
+  "keywords": [
+	  "transition",
+	  "gradient",
+	  "animate",
+	  "colors",
+	  "react"
+  ],
   "author": "Jon Kelley",
   "license": "MIT",
   "bugs": {
