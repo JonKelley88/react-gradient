@@ -20,7 +20,7 @@ const config = {
 		uglify,
 	],
 	output: {
-		format: 'esm',
+		format: 'umd',
 		name: 'react-gradient',
 		globals: {
 			react: 'React'
