@@ -96,6 +96,7 @@ export default class Gradient extends Component {
 			transitionType,
 			className = '',
 			gradientType,
+			style = {},
 			gradients,
 			children, 
 			duration,
@@ -111,7 +112,10 @@ export default class Gradient extends Component {
 			{	
 				...rest,
 				className: `react-gradient ${className}`,
-				style: { ...this.style }
+				style: { 
+					...style,
+					...this.style 
+				}
 			},
 			children
 		);
