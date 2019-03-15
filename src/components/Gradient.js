@@ -24,10 +24,12 @@ export default class Gradient extends Component {
 		this.cycleConstants = generateCycleConstants(this.rgbGradients, this.transitionType);	
 		this.lastCycle = this.rgbGradients.length - 1;
 		this.isText = props.property === 'text';
-		this.animationId = undefined;
+		this.animationId = 0;
 		this.mounted = false;
+		this.elapsed = 0;
 		
 		// methods
+		this.updateState = this.updateState.bind(this);
 		this.animate = this.animate.bind(this);
 		
 		// state
@@ -46,8 +48,14 @@ export default class Gradient extends Component {
 		this.mounted = false;
 		window.cancelAnimationFrame(this.animationId);
 	}
+
+	updateState(update) {
+		this.setState({
+			...update
+		});
+	}
 	
-	animate() {
+	animate(timestamp) {
 		if (!this.mounted) return;
 
 		const { currentCycle, counter } = this.state;
@@ -74,20 +82,22 @@ export default class Gradient extends Component {
 			this.style.WebkitTextFillColor = 'transparent';
 		}
 
-		const updatedCounter = counter >= this.duration ? 0 : counter + 16;
+		const interval = Math.round(timestamp - this.elapsed) || 16;
+		const updatedCounter = counter >= this.duration ? 0 : counter + interval;
 		const updatedCycle = currentCycle === this.lastCycle ? 0 : currentCycle + 1;
 
 		if (updatedCounter === 0) {
-			this.setState({
+			this.updateState({
 				currentCycle: updatedCycle,
 				counter: updatedCounter,
 			});
 		} else {
-			this.setState({
+			this.updateState({
 				counter: updatedCounter
 			});
 		}
-		
+
+		this.elapsed = timestamp;
 		this.animationId = window.requestAnimationFrame(this.animate);
 	}
 	
