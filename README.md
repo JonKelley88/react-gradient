@@ -1,10 +1,12 @@
-<h1 align="center">react-gradient</h1>
+# react-gradient
   
-<p align="center">A React component with built-in functionality to animate simple gradients</p>
+A React component with built-in functionality to animate simple gradients
+
+[Examples](https://jonkelley88.github.io/react-gradient/)
 
 ## Installation
 
-<b>react-gradient</b> is available as an [npm package](link-to-published-npm-page)
+**react-gradient** is available as an [npm package.](https://www.npmjs.com/package/react-gradient)
 ```bash
 $ npm install react-gradient
 ```
@@ -40,7 +42,7 @@ All options for the Gradient component are passed through props
 
 | Props                          | Type         | Default    | Description   | Values                                      
 | :-----------------------       | :----:       | :----:     | :------------ | :-----
-| gradients <b>(required)</b>    | array        |            | List of gradients to transition between | 
+| gradients **(required)**       | array        |            | List of gradients to transition between | 
 | property                       | string       | background | CSS property to apply the gradient to | `background`, <br> `border`, <br> `text`
 | gradientType                   | string       | linear     | Fill type of the gradient | `linear`, <br> `radial`
 | duration                       | number       | 5000       | How long each transition will take from one gradient to the next in milliseconds | milliseconds
