@@ -4,8 +4,9 @@
   "description": "A React component with built-in functionality to animate simple gradients",
   "main": "dist/react-gradient.min.js",
   "scripts": {
-    "build": "rollup -c -o dist/react-gradient.min.js",
-    "watch": "rollup -c -o dist/react-gradient.min.js --watch"
+    "start": "http-server ./ -p 1664",
+    "watch:js": "webpack",
+    "watch:css": "gulp watch"
   },
   "repository": {
     "type": "git",
@@ -37,12 +38,25 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "color-convert": "^2.0.0",
+    "gulp": "^4.0.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-env": "^0.4.0",
+    "gulp-if": "^2.0.2",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-util": "^3.0.8",
+    "html-loader": "^0.5.5",
+    "http-server": "^0.11.1",
     "lodash": "^4.17.11",
     "react": "^16.8.2",
-    "rollup": "^1.2.2",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-babel-minify": "^7.0.0",
-    "rollup-plugin-commonjs": "^9.2.1",
-    "rollup-plugin-node-resolve": "^4.0.0"
+    "react-dom": "^16.8.6",
+    "react-markdown": "^4.0.6",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "yargs": "^13.2.2"
+  },
+  "dependencies": {
+    "babel-loader": "^8.0.5"
   }
 }
