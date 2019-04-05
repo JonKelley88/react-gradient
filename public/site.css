@@ -47,7 +47,9 @@ body {
     font-size: 40px; }
 
 .content {
-  width: 70vw;
+  width: 50vw;
+  min-width: 300px;
+  max-width: 800px;
   min-height: 100vh;
   margin: 0 auto;
   padding: 30px 0; }
