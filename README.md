@@ -23,16 +23,16 @@ const gradients = [
 ];
 
 export default function App() {
-	return (
-		<div className="app">
-			<Gradient
-				gradients={ gradients } // required
-				property="background"
-				duration={ 3000 }
-				angle="45deg"
-			/>
-		</div>
-	);
+  return (
+    <div className="app">
+      <Gradient
+        gradients={ gradients }
+        property="background"
+        duration={ 3000 }
+        angle="45deg"
+      />
+    </div>
+  );
 }
 ```
 
