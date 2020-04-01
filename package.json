@@ -1,6 +1,6 @@
 {
   "name": "react-gradient",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React component with built-in functionality to animate simple gradients",
   "main": "dist/react-gradient.min.js",
   "scripts": {
