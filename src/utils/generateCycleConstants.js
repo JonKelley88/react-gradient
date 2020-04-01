@@ -26,7 +26,7 @@ export default function generateCycleConstants(gradients, transitionType) {
 
 		const targetLeft = sourceRight;
 		const targetRight = idx + 1 === lastCycle ? gradients[0] :
-			idx === lastCycle ? gradients[1] : 
+			idx === lastCycle ? gradients[1] :
 				gradients[idx + 2];
 
 		const sourceGradient = [sourceLeft, sourceRight];
@@ -38,7 +38,7 @@ export default function generateCycleConstants(gradients, transitionType) {
 		return {
 			sourceGradient,
 			leftDelta,
-			rightDelta		
+			rightDelta
 		};
 	});
 };

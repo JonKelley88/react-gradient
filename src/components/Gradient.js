@@ -7,30 +7,6 @@ import convertToRGB from '../utils/convertToRGB';
 export default class Gradient extends Component {
     //supported props
     //TODO currently a quick fix. Make this system better since at the beginning this component wasn't coded for changing props
-    constructor(props) {
-        super(props);
-
-
-        // the css property being passed into the component styles
-        this.style = {[this.property]: ''};
-
-        // other variables
-        this.animationId = 0;
-        this.mounted = false;
-        this.elapsed = 0;
-
-        // methods
-        this.updateState = this.updateState.bind(this);
-        this.animate = this.animate.bind(this);
-
-        // state
-        this.state = {
-            currentCycle: 0,
-            counter: 0,
-            cycleConstants: generateCycleConstants(this.rgbGradients, this.transitionType)
-        };
-    }
-
     //Possible way to clean up in the future is to use Gradient.defaultProps
     get transitionType() {
         return this.props.transitionType || 'parallel';
@@ -69,7 +45,32 @@ export default class Gradient extends Component {
         return this.rgbGradients.length - 1;
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    constructor(props) {
+        super(props);
+
+
+        // the css property being passed into the component styles
+        this.style = {[this.property]: ''};
+
+        // other variables
+        this.animationId = 0;
+        this.mounted = false;
+        this.elapsed = 0;
+
+        // methods
+        this.updateState = this.updateState.bind(this);
+        this.animate = this.animate.bind(this);
+
+        // state
+        this.state = {
+            currentCycle: 0,
+            counter: 0,
+            cycleConstants: generateCycleConstants(this.rgbGradients, this.transitionType)
+        };
+    }
+
+
+    componentDidUpdate(prevProps, prevState, snapshot) {//used to animate gradients on change
         if (prevProps.gradients !== this.props.gradients || prevProps.transitionType !== this.props.transitionType) {//means we need to prepare a gradient transition to new props
             //transitioning from this to the new prop gradients
             const oldCycle = prevState.cycleConstants[prevState.currentCycle];
