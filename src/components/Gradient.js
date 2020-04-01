@@ -82,6 +82,7 @@ export default class Gradient extends Component {
 
             this.props.gradients.unshift(activeGradient);//add to beginning of gradients so we can animate the change.
             const update = () => {
+
                 return {
                     cycleConstants: generateCycleConstants(convertToRGB(this.props.gradients, this.transitionType), this.transitionType),
                     counter: 0,
@@ -90,8 +91,12 @@ export default class Gradient extends Component {
             };
             this.updateState(update());
             setTimeout(() => {//once we finish changing from old to new, remove the old gradient and let the component loop between the new ones now.
-                this.props.gradients.shift(activeGradient);
-                this.updateState(update());
+                if (this.state.cycleConstants.length > 1) {//prevent entering an illegal state. Triggered if props change intervals are shorter than duration prop
+                    this.props.gradients.shift(activeGradient);
+
+
+                    this.updateState(update());
+                }
 
             }, this.duration);
 
